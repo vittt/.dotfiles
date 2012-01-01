@@ -1,0 +1,54 @@
+# -- Conky settings -- #
+background no
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+if_up_strictness address
+
+# -- Window specifications -- #
+#out_to_x no
+#out_to_console yes
+own_window yes
+own_window_type dock
+#own_window_transparent no
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+alignment bottom-right
+
+# -- Graphics settings -- #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+
+# -- Text settings -- #
+use_xft yes
+xftfont drift:pixelsize=9
+
+uppercase yes
+mpd_host localhost
+mpd_port 6600
+default_color 555555 # grau
+color1 777777 # hellgrau
+color2 a761c2 # grün
+color3 a0cf5d # lila
+color4 e74f4f # rot
+color5 e1aa5d # gelb
+#${color}B:${color1}${battery_short BAT0}
+TEXT
+${font erusfont:pixelsize=11}${color2}♫${color3}♪${color4}♫${color5}♪${color} ${mpd_bar 3,100}  ${font}${if_mpd_playing}${mpd_artist} ${color1}${mpd_title} ${color}${mpd_album}${else}nothing playing.${endif}\
+\
+${alignr}\
+${color5}CPU0: ${color1}${cpu cpu0}%  ${color5}CPU1: ${color1}${cpu cpu1}%  ${color5}RAM: ${color1}${mem} ${color3} // \
+${color4}CPU0: ${color1}${hwmon 0 temp 1}${font erusfont:pixelsize=10}°${font}C ${color4}CPU1: ${color1}${hwmon 0 temp 2}${font erusfont:pixelsize=10}°${font}C ${color4}GPU: ${color1}${execi 30 nvidia-settings -q [gpu:0]/GPUCoreTemp | grep '):' | awk '{print $4}' | sed 's/\.//'}${font erusfont:pixelsize=10}°${font}C ${color3} // \
+#${color2}Home: ${color1}${fs_free /home} ${color2}HDD0: ${color1}${fs_free /media/sda2} ${color3} //\
+
+${alignr}\
+${color5}${time %a %b %d} ${color4}${time %H:%M:%S}  
